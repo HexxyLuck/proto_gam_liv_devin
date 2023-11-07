@@ -10,12 +10,12 @@ public class PlayerMovement : MonoBehaviour
     private BoxCollider2D coll;
     private SpriteRenderer sprite;
     private Animator anim;
-    private Vector2 v2_boxSize = new Vector2(1, 1);
     private Vector2 v2_playerPosition = new Vector2(1, 1);
     private bool b_jump;
     private float f_jumpTime;
     private readonly float f_buttontime;
     [SerializeField] private LayerMask Ground;
+    [SerializeField] Vector3 v3_boxsize;
 
     private enum MovementState { idle, running, jumping, falling }
     // Start is called before the first frame update
@@ -36,9 +36,14 @@ public class PlayerMovement : MonoBehaviour
     {
         rb.AddForce(new Vector2(0, 400f));
     }
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawCube(transform.position - transform.up * 0.55f, v3_boxsize);
+    }
     private bool GroundCheck()
     {
-        bool b_check = Physics2D.BoxCast(transform.position, v2_boxSize, 0, -transform.up, 0.55f, Ground);
+        bool b_check = Physics2D.BoxCast(transform.position, v3_boxsize, 0,  -transform.up, 0.53f, Ground);
         return b_check;
     }
     // Update is called once per frame
