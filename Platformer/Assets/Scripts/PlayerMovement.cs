@@ -16,6 +16,7 @@ public class PlayerMovement : MonoBehaviour
     private readonly float f_buttontime;
     [SerializeField] private LayerMask Ground;
     [SerializeField] Vector3 v3_boxsize;
+    [SerializeField] float Ground_distance;
 
     private enum MovementState { idle, running, jumping, falling }
     // Start is called before the first frame update
@@ -25,7 +26,8 @@ public class PlayerMovement : MonoBehaviour
         coll = GetComponent<BoxCollider2D>();
         sprite = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
-    }
+   }
+
     //Checks using boxcast the a spacific layermask. It returns to true boolean if it is range.
     private void CharacterJump()
     {
@@ -39,11 +41,12 @@ public class PlayerMovement : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawCube(transform.position - transform.up * 0.55f, v3_boxsize);
+        //Gizmos.DrawCube(transform.position - transform.up * Ground_distance, v3_boxsize);
+        Gizmos.DrawCube(new Vector3(transform.position.x - 0.2f, transform.position.y,0) - transform.up * 0.53f, v3_boxsize);
     }
     private bool GroundCheck()
     {
-        bool b_check = Physics2D.BoxCast(transform.position, v3_boxsize, 0,  -transform.up, 0.53f, Ground);
+        bool b_check = Physics2D.BoxCast(new Vector2(transform.position.x-0.2f,transform.position.y), v3_boxsize, 0,  -transform.up, .53f, Ground);
         return b_check;
     }
     // Update is called once per frame
