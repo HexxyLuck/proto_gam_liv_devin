@@ -102,4 +102,12 @@ public class PlayerMovement : MonoBehaviour
         anim.SetInteger("state", (int)state);
     }
 
+
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        Debug.Log("Death");
+        transform.position = new Vector2(0, 2);
+    }
+
 }
